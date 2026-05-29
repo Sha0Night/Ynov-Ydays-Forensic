@@ -1,0 +1,145 @@
+[
+    {
+        "id": "2a9f58bf405c02a9",
+        "type": "tab",
+        "label": "Flux 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4ecf9135d045cf84",
+        "type": "mqtt-broker",
+        "name": "climit-mosquitto",
+        "broker": "172.18.0.3",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "d7446e65603d636b",
+        "type": "postgresdb",
+        "cfgname": "BDD_ClimIT ",
+        "hostname": "postgres",
+        "port": 5432,
+        "db": "climitdb",
+        "ssl": false
+    },
+    {
+        "id": "12e6f6b43408fda2",
+        "type": "mqtt in",
+        "z": "2a9f58bf405c02a9",
+        "name": "",
+        "topic": "climit/site1/sensor1/temperature",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "4ecf9135d045cf84",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 100,
+        "wires": [
+            [
+                "c3ac1c7e2b24404f"
+            ]
+        ]
+    },
+    {
+        "id": "c3ac1c7e2b24404f",
+        "type": "json",
+        "z": "2a9f58bf405c02a9",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 430,
+        "y": 100,
+        "wires": [
+            [
+                "2b3dd7131ebb38f2"
+            ]
+        ]
+    },
+    {
+        "id": "2b3dd7131ebb38f2",
+        "type": "function",
+        "z": "2a9f58bf405c02a9",
+        "name": "function 1",
+        "func": "const p = msg.payload;\n\nif (p.sensor_id === undefined || p.value === undefined || p.timestamp === undefined) {\n    node.warn(\"Payload invalide : \" + JSON.stringify(p));\n    return null;\n}\n\nconst measuredAt = new Date(p.timestamp * 1000).toISOString();\n\n// échappe les '\nconst rawPayload = JSON.stringify(p).replace(/'/g, \"''\");\n\nmsg.payload = `\nINSERT INTO measurements (sensor_id, measured_at, value_celsius, raw_payload)\nVALUES (${p.sensor_id}, '${measuredAt}', ${p.value}, '${rawPayload}');\n`;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "84ae9953d5a505b7",
+                "297b57f843c9bb36"
+            ]
+        ]
+    },
+    {
+        "id": "84ae9953d5a505b7",
+        "type": "debug",
+        "z": "2a9f58bf405c02a9",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "297b57f843c9bb36",
+        "type": "postgres",
+        "z": "2a9f58bf405c02a9",
+        "postgresdb": "d7446e65603d636b",
+        "name": "BDD_ClimIT ",
+        "output": false,
+        "perrow": false,
+        "rowspermsg": "1",
+        "return_on_error": false,
+        "limit_queries": "0",
+        "limit_by": "payload",
+        "limit_value": "1",
+        "limit_drop_intermediate": false,
+        "limit_drop_if_in_queue": false,
+        "outputs": false,
+        "x": 750,
+        "y": 100,
+        "wires": []
+    }
+]

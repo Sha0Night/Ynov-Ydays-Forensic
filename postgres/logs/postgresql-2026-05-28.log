@@ -1,0 +1,10 @@
+2026-05-28 21:54:33.412 UTC [1247] LOG:  connection received: host=90.51.90.190 port=52341
+2026-05-28 21:54:33.891 UTC [1247] LOG:  connection authorized: user=climit database=climitdb
+2026-05-28 21:58:33.412 UTC [1247] LOG:  statement: SELECT * FROM clients;
+2026-05-28 21:58:34.891 UTC [1247] LOG:  statement: SELECT * FROM users;
+2026-05-28 21:58:35.234 UTC [1247] LOG:  statement: SELECT id, email, password_hash, role FROM users;
+2026-05-28 21:58:36.102 UTC [1247] LOG:  statement: SELECT * FROM measurements LIMIT 5000;
+2026-05-28 21:58:37.445 UTC [1247] LOG:  statement: SELECT * FROM sensors;
+2026-05-28 21:58:38.901 UTC [1247] LOG:  statement: DROP TABLE measurements;
+2026-05-28 21:58:39.123 UTC [1247] LOG:  ERROR: must be owner of table measurements
+2026-05-28 21:58:45.001 UTC [1247] LOG:  disconnection: session time: 0:04:12.891

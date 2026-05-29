@@ -1,0 +1,29 @@
+0 verbose cli /usr/local/bin/node /usr/local/bin/npm
+1 info using npm@10.8.2
+2 info using node@v20.20.1
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/data/.npmrc
+5 silly config load:file:/usr/src/node-red/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm remove node-red-contrib-postgresql
+8 verbose argv "remove" "--no-audit" "--no-update-notifier" "--no-fund" "--save" "node-red-contrib-postgresql"
+9 verbose logfile logs-max:10 dir:/data/.npm/_logs/2026-05-09T22_40_32_442Z-
+10 verbose logfile /data/.npm/_logs/2026-05-09T22_40_32_442Z-debug-0.log
+11 silly packumentCache heap:2101084160 maxSize:525271040 maxEntrySize:262635520
+12 silly logfile done cleaning log files
+13 silly idealTree buildDeps
+14 silly reify mark retired [ '/data/node_modules/mustache', '/data/node_modules/.bin/mustache' ]
+15 silly reify mark retired [ '/data/node_modules/node-red-contrib-postgresql' ]
+16 silly reify moves {
+16 silly reify   '/data/node_modules/mustache': '/data/node_modules/.mustache-ROQ2oY93',
+16 silly reify   '/data/node_modules/.bin/mustache': '/data/node_modules/.bin/.mustache-TTkgdA98',
+16 silly reify   '/data/node_modules/node-red-contrib-postgresql': '/data/node_modules/.node-red-contrib-postgresql-IYEB5yK7'
+16 silly reify }
+17 silly REMOVE node_modules/node-red-contrib-postgresql
+18 silly REMOVE node_modules/mustache
+19 verbose cwd /data
+20 verbose os Linux 6.1.0-44-amd64
+21 verbose node v20.20.1
+22 verbose npm  v10.8.2
+23 verbose exit 0
+24 info ok

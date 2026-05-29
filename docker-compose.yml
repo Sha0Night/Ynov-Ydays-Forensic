@@ -1,0 +1,116 @@
+version: "3.8"
+
+# MOSQUITTO
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: climit-mosquitto
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - climit-net
+
+# NODE-RED
+  node-red:
+    image: nodered/node-red:latest
+    container_name: climit-nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    environment:
+      - TZ=Europe/Paris
+    depends_on:
+      - mosquitto
+      - postgres
+    volumes:
+      - ./node-red/data:/data
+    networks:
+      - climit-net
+
+# POSTGRES
+  postgres:
+    image: postgres:16
+    container_name: climit-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=climit
+      - POSTGRES_PASSWORD=Clim1t!DB
+      - POSTGRES_DB=climitdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/initdb:/docker-entrypoint-initdb.d
+    networks:
+      - climit-net
+
+# API
+  api:
+    image: python:3.11-slim
+    container_name: climit-api
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./api:/app
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             python climit_api.py"
+    environment:
+      - DB_HOST=postgres
+      - DB_NAME=climitdb
+      - DB_USER=climit
+      - DB_PASS=Clim1t!DB
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+    networks:
+      - climit-net
+
+# GENERATION TEMPERATURE
+  climit-simulator:
+    image: python:3.11-slim
+    container_name: climit-simulator
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - ./simulator:/app   # si tu mets simulator.py dans ./simulator
+    command: >
+      sh -c "pip install paho-mqtt &&
+             python simulator.py"
+    environment:
+      - MQTT_HOST=climit-mosquitto
+      - MQTT_PORT=1883
+      - MQTT_USER=sensoruser
+      - MQTT_PASS=Sensor!2026
+      - MQTT_TOPIC=climit/site1/sensor1/temperature
+      - SENSOR_ID=1
+      - BASE_TEMP=23.0
+    depends_on:
+      - mosquitto
+    networks:
+      - climit-net
+
+# PORTAIL WEB
+  web:
+    image: nginx:alpine
+    container_name: climit-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "8080:80"
+    volumes:
+      - ./web:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - climit-net
+
+networks:
+  climit-net:
+    driver: bridge

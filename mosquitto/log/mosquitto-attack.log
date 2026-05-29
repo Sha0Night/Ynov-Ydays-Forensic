@@ -1,0 +1,7 @@
+1748471633: New connection from 90.51.90.190 on port 1883
+1748471633: New client connected from 90.51.90.190 as attacker_client (p2, c1, k60, u'mqtt_admin')
+1748471645: Client attacker_client has sent PUBLISH to climit/site1/sensor1/temperature (d0, q0, r0, m0, '{"sensor_id":1,"value":99.99,"unit":"C","timestamp":1748471645}')
+1748471650: Client attacker_client has sent PUBLISH to climit/site1/sensor1/temperature (d0, q0, r0, m0, '{"sensor_id":1,"value":99.99,"unit":"C","timestamp":1748471650}')
+1748471655: Client attacker_client has sent PUBLISH to climit/site1/sensor1/temperature (d0, q0, r0, m0, '{"sensor_id":1,"value":99.99,"unit":"C","timestamp":1748471655}')
+1748471660: Client attacker_client has sent PUBLISH to climit/site1/sensor1/temperature (d0, q0, r0, m0, '{"sensor_id":1,"value":-99.99,"unit":"C","timestamp":1748471660}')
+1748471665: Client attacker_client DISCONNECTED
