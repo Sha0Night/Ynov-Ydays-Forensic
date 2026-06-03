@@ -218,3 +218,28 @@ Créateurs du projet et du scénario :
 Florian BAHLOULI & Supreet COMTE
 Tous droits réservés
 ```
+---
+
+## 🚩 CTF Forensic — ClimIT
+
+Un CTF forensic a été mis en place autour de ce projet. Les participants incarnent une équipe d'investigation mandatée pour analyser une cyberattaque sur l'infrastructure ClimIT.
+
+### Accès à la plateforme CTF
+
+🔗 **CTFd** : http://51.77.144.216:8000
+
+### Ressources disponibles
+
+- **Pack forensic** (Mode A) : téléchargeable directement sur CTFd — contient les logs nginx, credentials, postgresql et mosquitto à analyser.
+- **Environnement immersif** (Mode B) : accès direct aux serveurs via OpenVPN — contactez les organisateurs pour obtenir le fichier .ovpn.
+
+### Webmail
+
+🔗 **SOGo** : https://mail.climit-b3.online — accès à la boite mail de la victime pour analyser l'email de phishing.
+
+### 20 challenges progressifs
+
+- 🟢 Facile (100pts) — 10 challenges
+- 🟡 Moyen (200pts) — 5 challenges
+- 🔴 Difficile (400pts) — 3 challenges
+- ⚫ Expert (1000pts) — 2 challenges
