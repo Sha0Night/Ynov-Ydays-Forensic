@@ -1,0 +1,19 @@
+# Données sensibles
+.env
+*.env
+
+# Données PostgreSQL
+postgres/data/
+
+# Logs
+mosquitto/log/
+mosquitto/data/
+node-red/data/flows_cred.json
+
+# Fichiers temporaires
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.log
